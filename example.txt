@@ -1,0 +1,7 @@
+--table=call_center
+--table=catalog_returns --partitioning=cr_returned_date_sk
+--table=catalog_sales --partitioning=cs_sold_date_sk
+--table=store_returns --partitioning=sr_returned_date_sk
+--table=store_sales --partitioning=ss_sold_date_sk
+--table=web_returns --partitioning=wr_returned_date_sk
+--table=web_sales --partitioning=ws_sold_date_sk
