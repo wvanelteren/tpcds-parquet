@@ -78,7 +78,7 @@ public class Runner {
     private static String[] getCsvPaths(String dir, String tableName) throws Exception {
         return Files.list(Path.of(dir))
                 .map(Path::toString)
-                .filter(s -> s.contains(tableName))
+                .filter(name -> name.endsWith(tableName + ".dat") || name.contains(tableName + "_1_"))
                 .toArray(String[]::new);
     }
 }
