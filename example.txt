@@ -1,7 +1,24 @@
 --table=call_center
+--table=catalog_page
 --table=catalog_returns --partitioning=cr_returned_date_sk
 --table=catalog_sales --partitioning=cs_sold_date_sk
+--table=customer
+--table=customer_address
+--table=customer_demographics
+--table=date_dim
+--table=household_demographics
+--table=income_band
+--table=inventory --partitioning=inv_date_sk
+--table=item
+--table=promotion
+--table=reason
+--table=ship_mode
+--table=store
 --table=store_returns --partitioning=sr_returned_date_sk
 --table=store_sales --partitioning=ss_sold_date_sk
+--table=time_dim
+--table=warehouse
+--table=web_page
 --table=web_returns --partitioning=wr_returned_date_sk
 --table=web_sales --partitioning=ws_sold_date_sk
+--table=web_site

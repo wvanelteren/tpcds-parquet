@@ -1,0 +1,3 @@
+r_reason_sk bigint,
+r_reason_id char(16),
+r_reason_desc char(100)
