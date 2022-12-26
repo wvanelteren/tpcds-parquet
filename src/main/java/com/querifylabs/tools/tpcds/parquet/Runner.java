@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 public class Runner {
 
@@ -76,9 +77,18 @@ public class Runner {
     }
 
     private static String[] getCsvPaths(String dir, String tableName) throws Exception {
-        return Files.list(Path.of(dir))
-                .map(Path::toString)
-                .filter(name -> name.endsWith(tableName + ".dat") || name.contains(tableName + "_1_"))
-                .toArray(String[]::new);
+        var files = Files.list(Path.of(dir)).map(Path::toString).collect(Collectors.toSet());
+        var res = files.stream()
+                .filter((f) -> f.endsWith(tableName + ".dat"))
+                .collect(Collectors.toList());
+        if (res.isEmpty()) {
+            res = files.stream()
+                    .filter((f) -> f.contains(tableName + "_"))
+                    .collect(Collectors.toList());
+        }
+        if (res.isEmpty()) {
+            throw new RuntimeException("Table files not found: " + tableName);
+        }
+        return res.toArray(String[]::new);
     }
 }
