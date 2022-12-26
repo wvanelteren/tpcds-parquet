@@ -1,6 +1,8 @@
 package com.querifylabs.tools.tpcds.parquet;
 
 import org.apache.spark.sql.Column;
+import org.apache.spark.sql.DataFrameWriter;
+import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.StructType;
 
@@ -13,16 +15,17 @@ import java.util.stream.Collectors;
 
 public class Runner {
 
-    private static final String APP_NAME = "TpcdsParquet";
+    private static final String APP_NAME = "TpcdsConverter";
     private static final String SCHEMA_FILE_TEMPLATE = "%s.schema";
 
-    public static void run(String dir, String tableName, String partitioning) throws Exception {
+    public static void run(String dir, String tableName, String partitioning, Format format) throws Exception {
         var session = createSession();
         var schema = readSchema(tableName);
         var csvPath = getCsvPaths(dir, tableName);
-        var parquetPath = String.format("%s/parquet/%s", dir, tableName);
+        var outPath = format.path(dir, tableName);
+        DataFrameWriter<Row> writer;
         if (partitioning != null) {
-            session
+            writer = session
                 .read()
                 .schema(schema)
                 .option("delimiter", "|")
@@ -30,18 +33,26 @@ public class Runner {
                 .repartition(new Column(partitioning))
                 .write()
                 .option("compression", "snappy")
-                .partitionBy(partitioning)
-                .parquet(parquetPath);
+                .partitionBy(partitioning);
         } else {
-            session
+            writer = session
                 .read()
                 .schema(schema)
                 .option("delimiter", "|")
                 .csv(csvPath)
                 .repartition(1)
                 .write()
-                .option("compression", "snappy")
-                .parquet(parquetPath);
+                .option("compression", "snappy");
+        }
+        switch (format) {
+            case ORC:
+                writer.orc(outPath);
+                break;
+            case PARQUET:
+                writer.parquet(outPath);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown format: " + format);
         }
     }
 
