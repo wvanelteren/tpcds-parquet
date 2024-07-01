@@ -1,4 +1,4 @@
-d_date_sk bigint,
+d_date_sk integer,
 d_date_id char(16),
 d_date date,
 d_month_seq integer,
