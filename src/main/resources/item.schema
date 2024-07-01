@@ -1,4 +1,4 @@
-i_item_sk bigint,
+i_item_sk integer,
 i_item_id char(16),
 i_rec_start_date date,
 i_rec_end_date date,
