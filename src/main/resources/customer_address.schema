@@ -1,4 +1,4 @@
-ca_address_sk bigint,
+ca_address_sk integer,
 ca_address_id char(16),
 ca_street_number char(10),
 ca_street_name varchar(60),
