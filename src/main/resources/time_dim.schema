@@ -1,4 +1,4 @@
-t_time_sk bigint,
+t_time_sk integer,
 t_time_id char(16),
 t_time integer,
 t_hour integer,
