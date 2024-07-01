@@ -1,4 +1,4 @@
-w_warehouse_sk bigint,
+w_warehouse_sk integer,
 w_warehouse_id char(16),
 w_warehouse_name varchar(20),
 w_warehouse_sq_ft integer,
