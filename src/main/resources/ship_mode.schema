@@ -1,4 +1,4 @@
-sm_ship_mode_sk bigint,
+sm_ship_mode_sk integer,
 sm_ship_mode_id char(16),
 sm_type char(30),
 sm_code char(10),
